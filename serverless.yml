@@ -1,0 +1,29 @@
+service: life-serverless
+plugins:
+  - serverless-offline
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: us-east-1
+functions:
+  getUsers:
+    handler: functions/users.getUsers
+    events:
+      - http: GET users
+        cors: true
+  getUserById:
+    handler: functions/users.getUserById
+    events:
+      - http: GET users/{id}
+        cors: true
+  createUser:
+      handler: functions/users.createUser
+      events:
+        - http: POST users
+          cors: true
+  deleteUser:
+      handler: functions/users.deleteUser
+      events:
+        - http: DELETE users/{id}
+          cors: true
