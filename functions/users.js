@@ -30,18 +30,16 @@ module.exports.getUsers = async (event, context) => {
 }
 
 module.exports.createUser = async (event, context) => {
-  const body = event.body
-
   try {
-    const isValid = userIsValid(JSON.parse(body))
+    const body = JSON.parse(event.body)
+    const isValid = userIsValid(body)
     if (typeof isValid === 'object') {
       throw new Error(isValid.message)
     }
-    
     const params = {
       TableName,
       Item: {
-        ...JSON.parse(body),
+        ...body,
         id: uuid(),
         createdAt: new Date().getTime(),
         updatedAt: new Date().getTime()

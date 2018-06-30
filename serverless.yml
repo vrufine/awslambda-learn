@@ -39,4 +39,16 @@ functions:
     events:
       - http: GET clients/{id}
         cors: true
+  createClient:
+    handler: functions/clients.createClient
+    events:
+      - http: POST clients
+        cors: true
+  deleteClient:
+    handler: functions/clients.deleteClient
+    events:
+      - http: DELETE clients/{id}
+        cors: true
+
+
   

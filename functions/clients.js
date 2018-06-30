@@ -5,6 +5,7 @@ const AWS = require('aws-sdk')
 const documentClient = new AWS.DynamoDB.DocumentClient({
   region: 'us-east-1'
 })
+const clientValidator = require('./../utils/validators/clientValidator')
 
 const TableName = 'life_clientes'
 
@@ -56,7 +57,68 @@ const getClientById = async (event, context) => {
   }
 }
 
+const createClient = async (event, context) => {
+  try {
+    const body = JSON.parse(event.body)
+    const isValid = clientValidator(body)
+    if (typeof isValid === 'object') {
+      throw new Error(isValid.message)
+    }
+    const params = {
+      TableName,
+      Item: {
+        ...body,
+        id: uuid(),
+        createdAt: new Date().getTime(),
+        updatedAt: new Date().getTime()
+      }
+    }
+    await documentClient.put(params).promise()
+    return {
+      statusCode: 200,
+      body: {
+        message: 'Client created!'
+      }
+    }
+  } catch (error) {
+    return {
+      statusCode: error.statusCode,
+      body: {
+        error: error.message
+      }
+    }
+  }
+}
+
+const deleteClient = async (event, context) => {
+  try {
+    const id = event.pathParameters.id
+    const params = {
+      TableName,
+      Key: {
+        id
+      }
+    }
+    await documentClient.delete(params).promise()
+    return {
+      statusCode: 200,
+      body: {
+        message: 'Client deleted'
+      }
+    }
+  } catch (error) {
+    return {
+      statusCode: error.statusCode,
+      body: {
+        error: error.message
+      }
+    }
+  }
+}
+
 module.exports = {
   getClients,
-  getClientById
+  getClientById,
+  createClient,
+  deleteClient
 }
