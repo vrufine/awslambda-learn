@@ -5,6 +5,7 @@ const AWS = require('aws-sdk')
 const documentClient = new AWS.DynamoDB.DocumentClient({
   region: 'us-east-1'
 })
+const userIsValid = require('./../utils/validators/userValidator')
 
 const TableName = 'life_usuarios'
 
@@ -30,12 +31,20 @@ module.exports.getUsers = async (event, context) => {
 
 module.exports.createUser = async (event, context) => {
   const body = event.body
+
   try {
+    const isValid = userIsValid(JSON.parse(body))
+    if (typeof isValid === 'object') {
+      throw new Error(isValid.message)
+    }
+    
     const params = {
       TableName,
       Item: {
+        ...JSON.parse(body),
         id: uuid(),
-        ...JSON.parse(body)
+        createdAt: new Date().getTime(),
+        updatedAt: new Date().getTime()
       }
     }
     await documentClient.put(params).promise()

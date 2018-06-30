@@ -7,6 +7,7 @@ provider:
   stage: dev
   region: us-east-1
 functions:
+  # Users
   getUsers:
     handler: functions/users.getUsers
     events:
@@ -27,3 +28,15 @@ functions:
       events:
         - http: DELETE users/{id}
           cors: true
+  # Clients
+  getClients:
+    handler: functions/clients.getClients
+    events:
+      - http: GET clients
+        cors: true
+  getClientById:
+    handler: functions/clients.getClientById
+    events:
+      - http: GET clients/{id}
+        cors: true
+  
