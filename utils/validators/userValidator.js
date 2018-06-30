@@ -3,20 +3,20 @@ module.exports = user => {
     {
       field: 'nome',
       type: 'string',
-      requiredError: 'The field "nome" is required!',
-      typeError: 'The field "nome" should be a STRING!'
+      requiredError: 'The field \'nome\' is required!',
+      typeError: 'The field \'nome\' should be a STRING!'
     },
     {
       field: 'login',
       type: 'string',
-      requiredError: 'The field "login" is required!',
-      typeError: 'The field "login" should be a STRING!'
+      requiredError: 'The field \'login\' is required!',
+      typeError: 'The field \'login\' should be a STRING!'
     },
     {
       field: 'senha',
       type: 'string',
-      requiredError: 'The field "senha" is required!',
-      typeError: 'The field "senha" should be a STRING!'
+      requiredError: 'The field \'senha\' is required!',
+      typeError: 'The field \'senha\' should be a STRING!'
     }
   ]
 
