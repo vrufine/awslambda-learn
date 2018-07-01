@@ -17,14 +17,20 @@ const getClients = async (event, context) => {
     const clients = await documentClient.scan(params).promise()
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: 200,
       body: JSON.stringify(clients.Items)
     }
   } catch (error) {
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
@@ -46,7 +52,10 @@ const getClientById = async (event, context) => {
     if (client) {
       return {
         isBase64Encoded: false,
-        headers: {},
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
+        },
         statusCode: 200,
         body: JSON.stringify(client)
       }
@@ -56,7 +65,10 @@ const getClientById = async (event, context) => {
   } catch (error) {
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
@@ -84,7 +96,10 @@ const createClient = async (event, context) => {
     await documentClient.put(params).promise()
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: 200,
       body: JSON.stringify({
         message: 'Client created!'
@@ -93,7 +108,10 @@ const createClient = async (event, context) => {
   } catch (error) {
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
@@ -114,7 +132,10 @@ const deleteClient = async (event, context) => {
     await documentClient.delete(params).promise()
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: 200,
       body: JSON.stringify({
         message: 'Client deleted'
@@ -123,11 +144,17 @@ const deleteClient = async (event, context) => {
   } catch (error) {
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: error.statusCode || 400,
       body: JSON.stringify({
         isBase64Encoded: false,
-        headers: {},
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
+        },
         error: error.message
       })
     }

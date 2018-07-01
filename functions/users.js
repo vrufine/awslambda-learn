@@ -17,14 +17,20 @@ module.exports.getUsers = async (event, context) => {
     const users = await documentClient.scan(params).promise()
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: 200,
       body: JSON.stringify(users.Items)
-  }
+    }
   } catch (error) {
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
@@ -52,7 +58,10 @@ module.exports.createUser = async (event, context) => {
     await documentClient.put(params).promise()
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: 200,
       body: JSON.stringify({
         message: 'User created!'
@@ -61,7 +70,10 @@ module.exports.createUser = async (event, context) => {
   } catch (error) {
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
@@ -83,7 +95,10 @@ module.exports.getUserById = async (event, context) => {
     if (user) {
       return {
         isBase64Encoded: false,
-        headers: {},
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
+        },
         statusCode: 200,
         body: JSON.stringify(user)
       }
@@ -93,7 +108,10 @@ module.exports.getUserById = async (event, context) => {
   } catch (error) {
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
@@ -114,7 +132,10 @@ module.exports.deleteUser = async (event, context) => {
     await documentClient.delete(params).promise()
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: 200,
       body: JSON.stringify({
         message: 'User deleted!'
@@ -123,7 +144,10 @@ module.exports.deleteUser = async (event, context) => {
   } catch (error) {
     return {
       isBase64Encoded: false,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
       statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
