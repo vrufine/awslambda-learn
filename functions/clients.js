@@ -19,16 +19,16 @@ const getClients = async (event, context) => {
       isBase64Encoded: false,
       headers: {},
       statusCode: 200,
-      body: clients.Items
+      body: JSON.stringify(clients.Items)
     }
   } catch (error) {
     return {
       isBase64Encoded: false,
       headers: {},
       statusCode: error.statusCode,
-      body: {
+      body: JSON.stringify({
         error: error.message
-      }
+      })
     }
   }
 }
@@ -48,7 +48,7 @@ const getClientById = async (event, context) => {
         isBase64Encoded: false,
         headers: {},
         statusCode: 200,
-        body: client
+        body: JSON.stringify(client)
       }
     } else {
       throw new Error('Client not found')
@@ -58,9 +58,9 @@ const getClientById = async (event, context) => {
       isBase64Encoded: false,
       headers: {},
       statusCode: error.statusCode,
-      body: {
+      body: JSON.stringify({
         error: error.message
-      }
+      })
     }
   }
 }
@@ -86,18 +86,18 @@ const createClient = async (event, context) => {
       isBase64Encoded: false,
       headers: {},
       statusCode: 200,
-      body: {
+      body: JSON.stringify({
         message: 'Client created!'
-      }
+      })
     }
   } catch (error) {
     return {
       isBase64Encoded: false,
       headers: {},
       statusCode: error.statusCode,
-      body: {
+      body: JSON.stringify({
         error: error.message
-      }
+      })
     }
   }
 }
@@ -116,18 +116,20 @@ const deleteClient = async (event, context) => {
       isBase64Encoded: false,
       headers: {},
       statusCode: 200,
-      body: {
+      body: JSON.stringify({
         message: 'Client deleted'
-      }
+      })
     }
   } catch (error) {
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: error.statusCode,
-      body: {
+      body: JSON.stringify({
         isBase64Encoded: false,
         headers: {},
         error: error.message
-      }
+      })
     }
   }
 }

@@ -19,14 +19,16 @@ module.exports.getUsers = async (event, context) => {
       isBase64Encoded: false,
       headers: {},
       statusCode: 200,
-      body: users.Items
+      body: JSON.stringify(users.Items)
   }
   } catch (error) {
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: error.statusCode,
-      body: {
+      body: JSON.stringify({
         error: error.message
-      }
+      })
     }
   }
 }
@@ -52,18 +54,18 @@ module.exports.createUser = async (event, context) => {
       isBase64Encoded: false,
       headers: {},
       statusCode: 200,
-      body: {
+      body: JSON.stringify({
         message: 'User created!'
-      }
+      })
     }
   } catch (error) {
     return {
       isBase64Encoded: false,
       headers: {},
       statusCode: error.statusCode,
-      body: {
+      body: JSON.stringify({
         error: error.message
-      }
+      })
     }
   }
 }
@@ -83,7 +85,7 @@ module.exports.getUserById = async (event, context) => {
         isBase64Encoded: false,
         headers: {},
         statusCode: 200,
-        body: user
+        body: JSON.stringify(user)
       }
     } else {
       throw new Error('User not found')
@@ -93,9 +95,9 @@ module.exports.getUserById = async (event, context) => {
       isBase64Encoded: false,
       headers: {},
       statusCode: error.statusCode,
-      body: {
+      body: JSON.stringify({
         error: error.message
-      }
+      })
     }
   }
 }
@@ -114,18 +116,18 @@ module.exports.deleteUser = async (event, context) => {
       isBase64Encoded: false,
       headers: {},
       statusCode: 200,
-      body: {
+      body: JSON.stringify({
         message: 'User deleted!'
-      }
+      })
     }
   } catch (error) {
     return {
       isBase64Encoded: false,
       headers: {},
       statusCode: error.statusCode,
-      body: {
+      body: JSON.stringify({
         error: error.message
-      }
+      })
     }
   }
 }
