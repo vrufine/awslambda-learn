@@ -16,11 +16,15 @@ const getClients = async (event, context) => {
     }
     const clients = await documentClient.scan(params).promise()
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: 200,
       body: clients.Items
     }
   } catch (error) {
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: error.statusCode,
       body: {
         error: error.message
@@ -41,6 +45,8 @@ const getClientById = async (event, context) => {
     const client = (await documentClient.get(params).promise()).Item
     if (client) {
       return {
+        isBase64Encoded: false,
+        headers: {},
         statusCode: 200,
         body: client
       }
@@ -49,6 +55,8 @@ const getClientById = async (event, context) => {
     }
   } catch (error) {
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: error.statusCode,
       body: {
         error: error.message
@@ -75,6 +83,8 @@ const createClient = async (event, context) => {
     }
     await documentClient.put(params).promise()
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: 200,
       body: {
         message: 'Client created!'
@@ -82,6 +92,8 @@ const createClient = async (event, context) => {
     }
   } catch (error) {
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: error.statusCode,
       body: {
         error: error.message
@@ -101,6 +113,8 @@ const deleteClient = async (event, context) => {
     }
     await documentClient.delete(params).promise()
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: 200,
       body: {
         message: 'Client deleted'
@@ -110,6 +124,8 @@ const deleteClient = async (event, context) => {
     return {
       statusCode: error.statusCode,
       body: {
+        isBase64Encoded: false,
+        headers: {},
         error: error.message
       }
     }

@@ -16,9 +16,11 @@ module.exports.getUsers = async (event, context) => {
     }
     const users = await documentClient.scan(params).promise()
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: 200,
       body: users.Items
-    }
+  }
   } catch (error) {
     return {
       statusCode: error.statusCode,
@@ -47,6 +49,8 @@ module.exports.createUser = async (event, context) => {
     }
     await documentClient.put(params).promise()
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: 200,
       body: {
         message: 'User created!'
@@ -54,6 +58,8 @@ module.exports.createUser = async (event, context) => {
     }
   } catch (error) {
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: error.statusCode,
       body: {
         error: error.message
@@ -74,6 +80,8 @@ module.exports.getUserById = async (event, context) => {
     const user = (await documentClient.get(params).promise()).Item
     if (user) {
       return {
+        isBase64Encoded: false,
+        headers: {},
         statusCode: 200,
         body: user
       }
@@ -82,6 +90,8 @@ module.exports.getUserById = async (event, context) => {
     }
   } catch (error) {
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: error.statusCode,
       body: {
         error: error.message
@@ -101,6 +111,8 @@ module.exports.deleteUser = async (event, context) => {
     }
     await documentClient.delete(params).promise()
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: 200,
       body: {
         message: 'User deleted!'
@@ -108,6 +120,8 @@ module.exports.deleteUser = async (event, context) => {
     }
   } catch (error) {
     return {
+      isBase64Encoded: false,
+      headers: {},
       statusCode: error.statusCode,
       body: {
         error: error.message
