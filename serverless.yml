@@ -50,6 +50,27 @@ functions:
     events:
       - http: DELETE clients/{id}
         cors: true
+  # Flavors
+  getFlavors:
+    handler: functions/flavors.getFlavors
+    events:
+      - http: GET flavors
+        cors: true
+  createFlavor:
+    handler: functions/flavors.createFlavor
+    events:
+      - http: POST flavors
+        cors: true
+  getFlavorById:
+    handler: functions/flavors.getFlavorById
+    events:
+      - http: GET flavors/{id}
+        cors: true
+  deleteFlavor:
+    handler: functions/flavors.deleteFlavor
+    events:
+      - http: DELETE flavors/{id}
+        cors: true
 
 
   
