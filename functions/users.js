@@ -25,7 +25,7 @@ module.exports.getUsers = async (event, context) => {
     return {
       isBase64Encoded: false,
       headers: {},
-      statusCode: error.statusCode,
+      statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
       })
@@ -62,7 +62,7 @@ module.exports.createUser = async (event, context) => {
     return {
       isBase64Encoded: false,
       headers: {},
-      statusCode: error.statusCode,
+      statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
       })
@@ -94,7 +94,7 @@ module.exports.getUserById = async (event, context) => {
     return {
       isBase64Encoded: false,
       headers: {},
-      statusCode: error.statusCode,
+      statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
       })
@@ -124,7 +124,7 @@ module.exports.deleteUser = async (event, context) => {
     return {
       isBase64Encoded: false,
       headers: {},
-      statusCode: error.statusCode,
+      statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
       })

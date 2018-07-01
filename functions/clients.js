@@ -25,7 +25,7 @@ const getClients = async (event, context) => {
     return {
       isBase64Encoded: false,
       headers: {},
-      statusCode: error.statusCode,
+      statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
       })
@@ -57,7 +57,7 @@ const getClientById = async (event, context) => {
     return {
       isBase64Encoded: false,
       headers: {},
-      statusCode: error.statusCode,
+      statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
       })
@@ -94,7 +94,7 @@ const createClient = async (event, context) => {
     return {
       isBase64Encoded: false,
       headers: {},
-      statusCode: error.statusCode,
+      statusCode: error.statusCode || 400,
       body: JSON.stringify({
         error: error.message
       })
@@ -124,7 +124,7 @@ const deleteClient = async (event, context) => {
     return {
       isBase64Encoded: false,
       headers: {},
-      statusCode: error.statusCode,
+      statusCode: error.statusCode || 400,
       body: JSON.stringify({
         isBase64Encoded: false,
         headers: {},
