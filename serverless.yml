@@ -71,6 +71,26 @@ functions:
     events:
       - http: DELETE flavors/{id}
         cors: true
-
+  # Packagings
+  getPackagings:
+    handler: functions/packagings.getPackagings
+    events:
+      - http: GET packagings
+        cors: true
+  createPackaging:
+    handler: functions/packagings.createPackaging
+    events:
+      - http: POST packagings
+        cors: true
+  getPackagingById:
+    handler: functions/packagings.getPackagingById
+    events:
+      - http: GET packagings/{id}
+        cors: true
+  deletePackaging:
+    handler: functions/packagings.deletePackaging
+    events:
+      - http: DELETE packagings/{id}
+        cors: true
 
   

@@ -5,16 +5,16 @@ const AWS = require('aws-sdk')
 const documentClient = new AWS.DynamoDB.DocumentClient({
   region: 'us-east-1'
 })
-const userIsValid = require('./../utils/validators/userValidator')
+const packagingIsValid = require('./../utils/validators/packagingValidator')
 
-const TableName = 'life_usuarios'
+const TableName = 'life_embalagens'
 
-module.exports.getUsers = async (event, context) => {
+const getPackagings = async (event, context) => {
   try {
     const params = {
       TableName
     }
-    const users = await documentClient.scan(params).promise()
+    const packagings = await documentClient.scan(params).promise()
     return {
       isBase64Encoded: false,
       headers: {
@@ -22,7 +22,7 @@ module.exports.getUsers = async (event, context) => {
         'Access-Control-Allow-Credentials': true,
       },
       statusCode: 200,
-      body: JSON.stringify(users.Items)
+      body: JSON.stringify(packagings.Items)
     }
   } catch (error) {
     return {
@@ -39,10 +39,48 @@ module.exports.getUsers = async (event, context) => {
   }
 }
 
-module.exports.createUser = async (event, context) => {
+const getPackagingById = async (event, context) => {
+  try {
+    const id = event.pathParameters.id
+    const params = {
+      TableName,
+      Key: {
+        id
+      }
+    }
+    const packaging = (await documentClient.get(params).promise()).Item
+    if (packaging) {
+      return {
+        isBase64Encoded: false,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
+        },
+        statusCode: 200,
+        body: JSON.stringify(packaging)
+      }
+    } else {
+      throw new Error('Packaging not found')
+    }
+  } catch (error) {
+    return {
+      isBase64Encoded: false,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+      statusCode: error.statusCode || 400,
+      body: JSON.stringify({
+        error: error.message
+      })
+    }
+  }
+}
+
+const createPackaging = async (event, context) => {
   try {
     const body = JSON.parse(event.body)
-    const isValid = userIsValid(body)
+    const isValid = packagingIsValid(body)
     if (typeof isValid === 'object') {
       throw new Error(isValid.message)
     }
@@ -64,7 +102,7 @@ module.exports.createUser = async (event, context) => {
       },
       statusCode: 200,
       body: JSON.stringify({
-        message: 'User created!'
+        message: 'Packaging created!'
       })
     }
   } catch (error) {
@@ -82,45 +120,7 @@ module.exports.createUser = async (event, context) => {
   }
 }
 
-module.exports.getUserById = async (event, context) => {
-  try {
-    const id = event.pathParameters.id
-    const params = {
-      TableName,
-      Key: {
-        id
-      }
-    }
-    const user = (await documentClient.get(params).promise()).Item
-    if (user) {
-      return {
-        isBase64Encoded: false,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
-        },
-        statusCode: 200,
-        body: JSON.stringify(user)
-      }
-    } else {
-      throw new Error('User not found')
-    }
-  } catch (error) {
-    return {
-      isBase64Encoded: false,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
-      statusCode: error.statusCode || 400,
-      body: JSON.stringify({
-        error: error.message
-      })
-    }
-  }
-}
-
-module.exports.deleteUser = async (event, context) => {
+const deletePackaging = async (event, context) => {
   try {
     const id = event.pathParameters.id
     const params = {
@@ -138,7 +138,7 @@ module.exports.deleteUser = async (event, context) => {
       },
       statusCode: 200,
       body: JSON.stringify({
-        message: 'User deleted!'
+        message: 'Packaging deleted!'
       })
     }
   } catch (error) {
@@ -154,4 +154,11 @@ module.exports.deleteUser = async (event, context) => {
       })
     }
   }
+}
+
+module.exports = {
+  getPackagings,
+  getPackagingById,
+  createPackaging,
+  deletePackaging
 }
